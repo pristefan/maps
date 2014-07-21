@@ -259,3 +259,31 @@ function initialize() {
     marker();
 }
 
+function validateEmail() {
+    var sEmail = document.getElementById('email').value;
+    var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if (filter.test(sEmail)) {
+        document.getElementById('emer').style.visibility = 'hidden';
+        return true;
+    }
+    else {
+        document.getElementById('emer').style.visibility = 'visible';
+        return false;
+    }
+}
+function sentData() {
+    if (validateEmail())
+        $.ajax({
+            type: "POST",
+            url: "example.php",
+            data: "name=" + document.getElementById('name').value + "&email=" + document.getElementById('email').value,
+        }).success(function(msg) {
+            alert(msg);
+        }).fail(function(xmlHttpRequest, statusText, errorThrown) {
+            alert(
+                    "Your form submission failed.\n\n"
+                    + "XML Http Request: " + JSON.stringify(xmlHttpRequest)
+                    + ",\nStatus Text: " + statusText
+                    + ",\nError Thrown: " + errorThrown);
+        });
+}
