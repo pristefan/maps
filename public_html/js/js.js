@@ -2,9 +2,9 @@ var gjson;
 var map;
 var loc;
 var markers = [];
-// Add start point for the route
-function pickup() {
-    var autocomplete = new google.maps.places.Autocomplete((document.getElementById('pickup')), {types: ['geocode']});
+// Autocomplete
+function autocomplete( where ) {
+    var autocomplete = new google.maps.places.Autocomplete((document.getElementById(where)), {types: ['geocode']});
     google.maps.event.addListener(autocomplete, 'place_changed', function() {
         var place = autocomplete.getPlace();
         start = {
@@ -14,19 +14,7 @@ function pickup() {
         }
     });
 }
-// Add end point for the route
-function dropoff() {
-    var autocomplete = new google.maps.places.Autocomplete((document.getElementById('dropoff')), {types: ['geocode']});
-    google.maps.event.addListener(autocomplete, 'place_changed', function() {
-        var place = autocomplete.getPlace();
-        end = {
-            'lat': place.geometry.location.lat(),
-            'lng': place.geometry.location.lng(),
-            'address': place.address_components[0].long_name
-        }
-    });
-}
-// Request the route
+// Get the route from google
 function route() {
     var request = {
         origin: new google.maps.LatLng(start['lat'], start['lng']),
@@ -129,19 +117,6 @@ function QuoteService() {
             console.log(data);
         },
         async: true
-    });
-}
-// Autocomplete for search
-function sch() {
-    var autocomplete = new google.maps.places.Autocomplete((document.getElementById('search')), {types: ['geocode']});
-    google.maps.event.addListener(autocomplete, 'place_changed', function() {
-        var place = autocomplete.getPlace();
-        console.log(autocomplete);
-        start = {
-            'lat': place.geometry.location.lat(),
-            'lng': place.geometry.location.lng(),
-            'address': place.address_components[0].long_name
-        }
     });
 }
 // The search itself
@@ -252,8 +227,9 @@ function initialize() {
     map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
     directionsDisplay.setMap(map);
     //input autocomplet listeners
-    pickup();
-    dropoff();
+    autocomplete('pickup');
+    autocomplete('dropoff');
+    autocomplete('search');
     sch();
     search();
     marker();
@@ -271,6 +247,7 @@ function validateEmail() {
         return false;
     }
 }
+
 function sentData() {
     if (validateEmail())
         $.ajax({
