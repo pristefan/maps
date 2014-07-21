@@ -1,24 +1,36 @@
-var gjson;
-var map;
-var loc;
-var markers = [];
-// Autocomplete
-function autocomplete(where) {
+var gjson, map, loc, start = [];
+function autocomplete(where, i) {
     var autocomplete = new google.maps.places.Autocomplete((document.getElementById(where)), {types: ['geocode']});
     google.maps.event.addListener(autocomplete, 'place_changed', function() {
         var place = autocomplete.getPlace();
-        start = {
+        start[i] = {
             'lat': place.geometry.location.lat(),
             'lng': place.geometry.location.lng(),
             'address': place.address_components[0].long_name
         };
     });
 }
+//change the map type
+function mapType() {
+    i = document.getElementById("maptype").value;
+    if (i === 'HYBRID') {
+        map.setMapTypeId(google.maps.MapTypeId.HYBRID);
+    }
+    else if (i === "ROADMAP") {
+        map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+    }
+    else if (i === "SATELLITE") {
+        map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+    }
+    else if (i === "TERRAIN") {
+        map.setMapTypeId(google.maps.MapTypeId.TERRAIN);
+    }
+}
 // Get the route from google
 function route() {
     var request = {
-        origin: new google.maps.LatLng(start['lat'], start['lng']),
-        destination: new google.maps.LatLng(end['lat'], end['lng']),
+        origin: new google.maps.LatLng(start[0]['lat'], start[0]['lng']),
+        destination: new google.maps.LatLng(start[1]['lat'], start[1]['lng']),
         optimizeWaypoints: false,
         travelMode: google.maps.TravelMode.DRIVING,
         unitSystem: google.maps.UnitSystem.METRIC
@@ -113,8 +125,10 @@ function QuoteService() {
         data: JSON.stringify(obj),
         contentType: 'application/json',
         success: function(data) {
-            document.getElementById('json').innerHTML = 'The price will be ' + data.records.totalPrice + ' &pound; and the distance covered is ' + gjson.routes[0].legs[0].distance.text;
-            console.log(data);
+            document.getElementById('json').innerHTML = 'The price will be '
+                    + data.records.totalPrice
+                    + ' &pound; and the distance covered is '
+                    + gjson.routes[0].legs[0].distance.text;
         },
         async: true
     });
@@ -189,16 +203,12 @@ function addMarker(lat, location) {
     });
     infowindow.open(map, marker);
 }
-// Sets the map on all markers in the array.
-function setAllMap(map1) {
-    for (var i = 0; i < markers.length; i++) {
-        markers[i].setMap(map1);
-    }
-}
 // Deletes all markers in the array by removing references to them.
 function deleteMarkers() {
-    try {markers[0].setMap(null);}
-    catch(err){ 
+    try {
+        markers[0].setMap(null);
+    }
+    catch (err) {
     }
     markers = [];
 }
@@ -211,7 +221,6 @@ function marker() {
         });
     });
 }
-
 //Function for the initialization of the map
 function initialize() {
     directionsDisplay = new google.maps.DirectionsRenderer();
@@ -225,8 +234,8 @@ function initialize() {
     map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
     directionsDisplay.setMap(map);
     //input autocomplet listeners
-    autocomplete('pickup');
-    autocomplete('dropoff');
+    autocomplete('pickup', 0);
+    autocomplete('dropoff', 1);
     autocomplete('search');
     search();
     marker();
