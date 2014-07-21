@@ -198,8 +198,7 @@ function setAllMap(map1) {
 // Deletes all markers in the array by removing references to them.
 function deleteMarkers() {
     try {markers[0].setMap(null);}
-    catch(err){
-        console.log(err);
+    catch(err){ 
     }
     markers = [];
 }
