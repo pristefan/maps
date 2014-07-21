@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Place Autocomplete Address Form</title>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+        <style>
+            #map-canvas {
+                height: 400px;
+                width: 600px;
+                margin: 0px;
+                padding: 0px
+            }
+        </style>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+
+        <script>
+
+            var obj;
+
+            var start;
+            var end;
+            var waypoint1;
+            var waypoint2;
+            var waypoint3;
+
+            function autocomplet(point, element) {
+
+                var autocomplete = new google.maps.places.Autocomplete((element), {types: ['geocode']});
+
+                google.maps.event.addListener(autocomplete, 'place_changed', function() {
+                    var place = autocomplete.getPlace();
+                    window[point] = {
+                        'lat': place.geometry.location.lat(),
+                        'lng': place.geometry.location.lng(),
+                        'address': place.address_components[0].long_name
+                    }
+                });
+            }
+
+            function CalcRoute() {
+                var waypts = new Array();
+                if (waypoint1) {
+                    var w1 = {
+                        location: new google.maps.LatLng(waypoint1['lat'], waypoint1['lng']),
+                        stopover: true
+                    };
+                    waypts.push(w1);
+                }
+                if (waypoint2) {
+                    var w2 = {
+                        location: new google.maps.LatLng(waypoint2['lat'], waypoint2['lng']),
+                        stopover: true
+                    };
+                    waypts.push(w2);
+                }
+                if (waypoint3) {
+                    var w3 = {
+                        location: new google.maps.LatLng(waypoint3['lat'], waypoint3['lng']),
+                        stopover: true
+                    };
+                    waypts.push(w3);
+                }
+
+                var request = {
+                    origin: new google.maps.LatLng(start['lat'], start['lng']),
+                    destination: new google.maps.LatLng(end['lat'], end['lng']),
+                    waypoints: waypts,
+                    optimizeWaypoints: false,
+                    travelMode: google.maps.TravelMode.DRIVING,
+                    unitSystem: google.maps.UnitSystem.IMPERIAL,
+                    region: 'GB'
+
+                };
+                directionsService.route(request, function(result, status) {
+                    if (status == google.maps.DirectionsStatus.OK) {
+                        directionsDisplay.setDirections(result);
+                    }
+
+                    var distance = 0;
+                    var legs = [];
+                    var duration = 0;
+                    var route = result.routes[0];
+                    var n = route.legs.length;
+                    var points_list = new Array();
+
+                    for (i = 0; i < n; i++) {
+                        distance += route.legs[i].distance.value;
+                        duration += Math.round(route.legs[i].duration.value);
+                        switch (i) {
+                            case 0:
+                                var first_point = {
+                                    'lng': route.legs[i].start_location.lng(),
+                                    'lat': route.legs[i].start_location.lat(),
+                                    "type": "p",
+                                    "address": route.legs[i].start_address
+                                };
+                                points_list.push(first_point);
+                                break;
+                            case n - 1:
+                                var last_waypoint = {
+                                    'lng': route.legs[i].start_location.lng(),
+                                    'lat': route.legs[i].start_location.lat(),
+                                    "type": "w",
+                                    "address": route.legs[i].start_address
+                                };
+                                var dropoff_point = {
+                                    'lng': route.legs[i].start_location.lng(),
+                                    'lat': route.legs[i].start_location.lat(),
+                                    "type": "d",
+                                    "address": route.legs[i].end_address
+                                };
+                                points_list.push(last_waypoint);
+                                points_list.push(dropoff_point);
+                                break;
+
+                            default:
+                                var stow_point = {
+                                    'lng': route.legs[i].start_location.lng(),
+                                    'lat': route.legs[i].start_location.lat(),
+                                    "type": "w",
+                                    "address": route.legs[i].start_address
+                                };
+                                points_list.push(stow_point);
+                                break;
+                        }
+                        legs.push(route.legs[i].distance.value);
+                    }
+                    console.log(points_list);
+                    obj = {
+                        "priceList": [
+                            {
+                                "Booking": {
+                                    "id_client": 102480,
+                                    "id_car_type": 2,
+                                    "payment_method": "CREDIT ONLINE",
+                                    "transfer_type": "local"
+                                },
+                                "BookingCharge": {
+                                    "com_cash": 1,
+                                    "com_credit": 2,
+                                    "driver_tip": 2
+                                },
+                                "Journey": {
+                                    "child_seats_number": 5,
+                                    "req_baby_seat": "yes",
+                                    "extra_duration_delay": 0,
+                                    "pickup_time": "2015-01-21 13:00:00",
+                                    "journey_type": "localaddress-localaddress"
+                                },
+                                "RouteInfo": {
+                                    "points_list": points_list,
+                                    "distance": distance,
+                                    "duration": duration,
+                                    "old_distance": 0,
+                                    "legs": legs
+                                }
+                            }
+                        ]};
+                });
+            }
+
+            var directionsDisplay;
+            var map;
+
+            function initialize() {
+
+                //map initialize
+                directionsService = new google.maps.DirectionsService();
+                directionsDisplay = new google.maps.DirectionsRenderer();
+                var center = new google.maps.LatLng(51.532486, -0.120825);
+                var mapOptions = {
+                    zoom: 6,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    center: center
+                }
+                map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+                directionsDisplay.setMap(map);
+
+
+                //input autocomplet listeners
+                autocomplet('start', document.getElementById('pickup'));
+                autocomplet('end', document.getElementById('dropoff'));
+                autocomplet('waypoint1', document.getElementById('waypoint1'));
+                autocomplet('waypoint2', document.getElementById('waypoint2'));
+                autocomplet('waypoint3', document.getElementById('waypoint3'));
+
+            }
+
+            google.maps.event.addDomListener(window, 'load', initialize);
+
+            function QuoteService() {
+                $.ajax({
+                    type: 'POST',
+                    url: "https://api_test_gtn.insoftd.com/v1/operator/price/new",
+                    dataType: "json",
+                    data: JSON.stringify(obj),
+                    contentType: 'application/json',
+                    success: function(data) {
+                        document.getElementById("json").innerHTML = JSON.stringify(data.records, undefined, 2);
+                    },
+                    async: true
+                });
+            }
+
+        </script>
+    </head>
+    <body>
+        <div style="float:left; width:600px;">
+            <ul>
+                <li><label>Pickup</label><input id="pickup" placeholder="Enter your address"type="text"></input></li>
+                <li><label>wp1</label><input id="waypoint1" placeholder="Enter your address"type="text"></input></li>
+                <li><label>wp2</label><input id="waypoint2" placeholder="Enter your address"type="text"></input></li>
+                <li><label>wp3</label><input id="waypoint3" placeholder="Enter your address"type="text"></input></li>
+                <li><label>Dropoff</label><input id="dropoff" placeholder="Enter your address"type="text"></input></li>
+            </ul>
+
+            <button onclick="CalcRoute()">Calc Route</button>
+            <button onclick="QuoteService()">GetQuote</button>
+
+            <div id="map-canvas"></div>
+        </div>
+
+
+        <div id="results" style="float:left;width:400px; ">
+            <pre id="json"></pre>
+        </div>
+
+    </body>
+</html>
