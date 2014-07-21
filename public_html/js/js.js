@@ -3,7 +3,7 @@ var map;
 var loc;
 var markers = [];
 // Autocomplete
-function autocomplete( where ) {
+function autocomplete(where) {
     var autocomplete = new google.maps.places.Autocomplete((document.getElementById(where)), {types: ['geocode']});
     google.maps.event.addListener(autocomplete, 'place_changed', function() {
         var place = autocomplete.getPlace();
@@ -11,7 +11,7 @@ function autocomplete( where ) {
             'lat': place.geometry.location.lat(),
             'lng': place.geometry.location.lng(),
             'address': place.address_components[0].long_name
-        }
+        };
     });
 }
 // Get the route from google
@@ -195,13 +195,12 @@ function setAllMap(map1) {
         markers[i].setMap(map1);
     }
 }
-// Removes the markers from the map, but keeps them in the array.
-function clearMarkers() {
-    setAllMap(null);
-}
 // Deletes all markers in the array by removing references to them.
 function deleteMarkers() {
-    clearMarkers();
+    try {markers[0].setMap(null);}
+    catch(err){
+        console.log(err);
+    }
     markers = [];
 }
 // Request the JSON for the marker
@@ -230,7 +229,6 @@ function initialize() {
     autocomplete('pickup');
     autocomplete('dropoff');
     autocomplete('search');
-    sch();
     search();
     marker();
 }
@@ -253,7 +251,7 @@ function sentData() {
         $.ajax({
             type: "POST",
             url: "example.php",
-            data: "name=" + document.getElementById('name').value + "&email=" + document.getElementById('email').value,
+            data: "name=" + document.getElementById('name').value + "&email=" + document.getElementById('email').value
         }).success(function(msg) {
             alert(msg);
         }).fail(function(xmlHttpRequest, statusText, errorThrown) {
