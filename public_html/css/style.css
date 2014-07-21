@@ -1,0 +1,18 @@
+/* 
+    Created on : 21.07.2014, 10:31:40
+    Author     : Stefan
+*/
+
+#search {
+            background-color: #fff;
+            padding: 0 11px 0 13px;
+            width: 300px;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            text-overflow: ellipsis;
+        }
+        #map-canvas{
+            height: 500px;
+            width: 100%;
+        }
