@@ -228,8 +228,9 @@ function initialize() {
     //Options for the map
     var mapOptions = {
         zoom: 6,
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        center: center
+        mapTypeId: google.maps.MapTypeId.HYBRID,
+        center: center,
+        mapTypeControl: false
     };
     map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
     directionsDisplay.setMap(map);
