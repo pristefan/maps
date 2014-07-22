@@ -3,12 +3,14 @@
     Author     : Stefan
 */
 body{
+    margin: 0px;
     font-family: Roboto;
 }
 #search {
     background-color: #fff;
     padding: 0 11px 0 13px;
     width: 300px;
+    top: 10px;
     font-family: Roboto;
     font-size: 15px;
     font-weight: 300;
@@ -31,11 +33,12 @@ body{
     height: 200px;
     width: 320px;
     display: none;
-    background-color: #e0e0e0;
+    background-color: #E5E3DF;
 }
 #maptype{
     position: absolute;
     right: 350px;
+    top: 10px;
     z-index: 100;
 }
 .options {

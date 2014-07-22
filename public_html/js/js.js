@@ -45,7 +45,7 @@ function route() {
         });
     }
     catch (err) {
-        document.getElementById('json').innerHTML = "Please enter the route first.";
+        document.getElementById('info').innerHTML = "Please enter the route first.";
     }
 }
 // Request the price
@@ -122,7 +122,7 @@ function price() {
         QuoteService();
     }
     catch (err) {
-        document.getElementById('json').innerHTML = "Please enter the route first.";
+        document.getElementById('info').innerHTML = "Please enter the route first.";
     }
 }
 // Get the Json from server
@@ -134,7 +134,7 @@ function QuoteService() {
         data: JSON.stringify(obj),
         contentType: 'application/json',
         success: function(data) {
-            document.getElementById('json').innerHTML = 'The price will be '
+            document.getElementById('info').innerHTML = 'The price will be '
                     + data.records.totalPrice
                     + ' &pound; and the distance covered is '
                     + gjson.routes[0].legs[0].distance.text;
