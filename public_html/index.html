@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script> 
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=places"></script> 
     <script src="js/js.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <body>
@@ -24,13 +24,13 @@
         <div id="map-canvas">
         </div>
         <button id="hide" onclick="{
-                    $('#right').show();
-                    $('#hide').hide();
+                    $('#right').show(1000);
+                    $('#hide').hide(1000);
                 }">Show more controls</button>
         <div id="right">
             <button class="options" onclick="{
-                        $('#right').hide();
-                        $('#hide').show();
+                        $('#right').hide(1000);
+                        $('#hide').show(1000);
                     }">Hide this controls</button><br>
             <input class='options' id="pickup" type="text"
                    placeholder="From"><br>
