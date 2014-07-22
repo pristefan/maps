@@ -29,6 +29,12 @@
     width: 600px;
     display: none;
 }
+#dropoff{
+    width: 300px;
+}
+#pickup{
+    width: 300px;
+}
 #maptype{
     position: absolute;
     left: 600px;

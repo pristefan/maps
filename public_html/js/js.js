@@ -221,7 +221,7 @@ function deleteMarkers() {
     }
     markers = [];
 }
-// Request the JSON for the marker
+// Request the JSON for the marker.
 function marker() {
     google.maps.event.addListener(map, 'click', function(event) {
         $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + event.latLng.k + "," + event.latLng.B, function(result) {
@@ -230,7 +230,7 @@ function marker() {
         });
     });
 }
-//Function for the initialization of the map
+//Function for the initialization of the map.
 function initialize() {
     directionsDisplay = new google.maps.DirectionsRenderer();
     var center = new google.maps.LatLng(45.943161, 24.966760000000022);
