@@ -11,8 +11,7 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <body>
         <script>
-            google.maps.event.addDomListener(window, 'load', initialize);
-        </script>
+            google.maps.event.addDomListener(window, 'load', initialize);</script>
 
         <input id="search" type="text" placeholder="Search">
         <select onchange="mapType()" id="maptype">
@@ -36,7 +35,11 @@
                    placeholder="From"><br>
             <input class='options' id="dropoff" type="text"
                    placeholder="To"><br>
-            <input class="options" type="button" onclick="route()" value="Get Route">
+            <input class="options" type="button" onclick="{
+                        $.when(route()).then(function(x) {
+                            $('#info').html('');
+                        });
+                    }" value="Get Route">
             <button class="options" onclick="price()">Get Price </button>  
             <br>
             <div class='options' id="info">
