@@ -4,7 +4,7 @@
     <title>Place Autocomplete</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script> 
     <script src="js/js.js"></script>
@@ -28,18 +28,18 @@
                     $('#hide').hide();
                 }">Show more controls</button>
         <div id="right">
-            <button onclick="{
+            <button class="options" onclick="{
                         $('#right').hide();
                         $('#hide').show();
                     }">Hide this controls</button><br>
-            <input id="pickup" type="text"
+            <input class='options' id="pickup" type="text"
                    placeholder="From"><br>
-            <input id="dropoff" type="text"
+            <input class='options' id="dropoff" type="text"
                    placeholder="To"><br>
-            <input type="button" onclick="route()" value="Get Route">
-            <button onclick="price()">Get Price </button>  
+            <input class="options" type="button" onclick="route()" value="Get Route">
+            <button class="options" onclick="price()">Get Price </button>  
             <br>
-            <div id="json">
+            <div class='options' id="json">
             </div>
         </div>
     </body>
