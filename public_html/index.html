@@ -21,11 +21,17 @@
             <option value="SATELLITE">SATELLITE</option>
             <option value="TERRAIN">TERRAIN</option>
         </select>
-        <div id="json">
-        </div>
         <div id="map-canvas">
         </div>
+        <button id="hide" onclick="{
+                    $('#right').show();
+                    $('#hide').hide();
+                }">Show more controls</button>
         <div id="right">
+            <button onclick="{
+                        $('#right').hide();
+                        $('#hide').show();
+                    }">Hide this controls</button><br>
             <input id="pickup" type="text"
                    placeholder="From">
             <input id="dropoff" type="text"
@@ -33,6 +39,8 @@
             <input type="button" onclick="route()" value="Get Route">
             <button onclick="price()">Get Price </button>  
             <br>
+            <div id="json">
+            </div>
         </div>
     </body>
 </html>

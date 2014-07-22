@@ -28,93 +28,102 @@ function mapType() {
 }
 // Get the route from google
 function route() {
-    var request = {
-        origin: new google.maps.LatLng(start[0]['lat'], start[0]['lng']),
-        destination: new google.maps.LatLng(start[1]['lat'], start[1]['lng']),
-        optimizeWaypoints: false,
-        travelMode: google.maps.TravelMode.DRIVING,
-        unitSystem: google.maps.UnitSystem.METRIC
-    };
-    var directionsService = new google.maps.DirectionsService();
-    directionsService.route(request, function(result, status) {
-        if (status == google.maps.DirectionsStatus.OK) {
-            directionsDisplay.setDirections(result);
-            gjson = result;
-        }
-    });
+    try {
+        var request = {
+            origin: new google.maps.LatLng(start[0]['lat'], start[0]['lng']),
+            destination: new google.maps.LatLng(start[1]['lat'], start[1]['lng']),
+            optimizeWaypoints: false,
+            travelMode: google.maps.TravelMode.DRIVING,
+            unitSystem: google.maps.UnitSystem.METRIC
+        };
+        var directionsService = new google.maps.DirectionsService();
+        directionsService.route(request, function(result, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                directionsDisplay.setDirections(result);
+                gjson = result;
+            }
+        });
+    }
+    catch (err) {
+        document.getElementById('json').innerHTML = "Please enter the route first.";
+    }
 }
 // Request the price
 function price() {
+    try {
+        var distance = 0;
+        var legs = [];
+        var duration = 0;
+        var route = gjson.routes[0];
+        var n = route.legs.length;
+        var points_list = new Array();
+        for (i = 0; i < n; i++) {
+            distance += route.legs[i].distance.value;
+            duration += Math.round(route.legs[i].duration.value);
+            var first_point = {
+                'lng': route.legs[0].start_location.lng(),
+                'lat': route.legs[0].start_location.lat(),
+                "type": "p",
+                "address": route.legs[0].start_address
+            };
+            points_list.push(first_point);
+            var dropoff_point = {
+                'lng': route.legs[0].end_location.lng(),
+                'lat': route.legs[0].end_location.lat(),
+                "type": "d",
+                "address": route.legs[i].end_address
+            };
+            legs.push(route.legs[i].distance.value);
+        }
+        obj = {
+            "priceList": [
+                {
+                    "Booking": {
+                        "id_client": 102480,
+                        "id_car_type": 2,
+                        "payment_method": "CREDIT ONLINE",
+                        "transfer_type": "local"
+                    },
+                    "BookingCharge": {
+                        "com_cash": 1,
+                        "com_credit": 2,
+                        "driver_tip": 2
+                    },
+                    "Journey": {
+                        "child_seats_number": 5,
+                        "req_baby_seat": "yes",
+                        "extra_duration_delay": 0,
+                        "pickup_time": "2015-01-21 13:00:00",
+                        "journey_type": "localaddress-localaddress"
+                    },
+                    "RouteInfo": {
+                        "points_list": [
+                            {
+                                'lng': gjson.routes[0].legs[0].start_location.B,
+                                'lat': gjson.routes[0].legs[0].start_location.k,
+                                "type": "p",
+                                "address": gjson.routes[0].legs[0].start_address
+                            },
+                            {
+                                'lng': gjson.routes[0].legs[0].end_location.B,
+                                'lat': gjson.routes[0].legs[0].end_location.k,
+                                "type": "d",
+                                "address": gjson.routes[0].legs[0].end_address
+                            }
 
-    var distance = 0;
-    var legs = [];
-    var duration = 0;
-    var route = gjson.routes[0];
-    var n = route.legs.length;
-    var points_list = new Array();
-    for (i = 0; i < n; i++) {
-        distance += route.legs[i].distance.value;
-        duration += Math.round(route.legs[i].duration.value);
-        var first_point = {
-            'lng': route.legs[0].start_location.lng(),
-            'lat': route.legs[0].start_location.lat(),
-            "type": "p",
-            "address": route.legs[0].start_address
-        };
-        points_list.push(first_point);
-        var dropoff_point = {
-            'lng': route.legs[0].end_location.lng(),
-            'lat': route.legs[0].end_location.lat(),
-            "type": "d",
-            "address": route.legs[i].end_address
-        };
-        legs.push(route.legs[i].distance.value);
-    }
-    obj = {
-        "priceList": [
-            {
-                "Booking": {
-                    "id_client": 102480,
-                    "id_car_type": 2,
-                    "payment_method": "CREDIT ONLINE",
-                    "transfer_type": "local"
-                },
-                "BookingCharge": {
-                    "com_cash": 1,
-                    "com_credit": 2,
-                    "driver_tip": 2
-                },
-                "Journey": {
-                    "child_seats_number": 5,
-                    "req_baby_seat": "yes",
-                    "extra_duration_delay": 0,
-                    "pickup_time": "2015-01-21 13:00:00",
-                    "journey_type": "localaddress-localaddress"
-                },
-                "RouteInfo": {
-                    "points_list": [
-                        {
-                            'lng': gjson.routes[0].legs[0].start_location.B,
-                            'lat': gjson.routes[0].legs[0].start_location.k,
-                            "type": "p",
-                            "address": gjson.routes[0].legs[0].start_address
-                        },
-                        {
-                            'lng': gjson.routes[0].legs[0].end_location.B,
-                            'lat': gjson.routes[0].legs[0].end_location.k,
-                            "type": "d",
-                            "address": gjson.routes[0].legs[0].end_address
-                        }
-
-                    ],
-                    "distance": distance,
-                    "duration": duration,
-                    "old_distance": 0,
-                    "legs": legs
+                        ],
+                        "distance": distance,
+                        "duration": duration,
+                        "old_distance": 0,
+                        "legs": legs
+                    }
                 }
-            }
-        ]};
-    QuoteService();
+            ]};
+        QuoteService();
+    }
+    catch (err) {
+        document.getElementById('json').innerHTML = "Please enter the route first.";
+    }
 }
 // Get the Json from server
 function QuoteService() {
