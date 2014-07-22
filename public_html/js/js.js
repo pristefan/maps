@@ -28,7 +28,6 @@ function mapType() {
 }
 // Get the route from google
 function route() {
-    try {
         var request = {
             origin: new google.maps.LatLng(start[0]['lat'], start[0]['lng']),
             destination: new google.maps.LatLng(start[1]['lat'], start[1]['lng']),
@@ -43,10 +42,6 @@ function route() {
                 gjson = result;
             }
         });
-    }
-    catch (err) {
-        document.getElementById('info').innerHTML = "Please enter the route first.";
-    }
 }
 // Request the price
 function price() {
