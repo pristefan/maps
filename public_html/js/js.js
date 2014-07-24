@@ -260,15 +260,23 @@ function validateEmail() {
 }
 
 function validatePassword() {
-
-
+    var pass = document.getElementById('pass').value;
+    var filter = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+    if (filter.test(pass)) {
+        document.getElementById('pass1').style.visibility = 'hidden';
+        return true;
+    }
+    else {
+        document.getElementById('pass1').style.visibility = 'visible';
+        return false;
+    }
 }
 
 function req() {
     fn = $("#fName").val();
     ln = $("#lName").val();
-    ps = $("#pass1").val();
-    if (fn != '' && ln != '' && ps != '') {
+    us = $("#user").val();
+    if (fn != '' && ln != '' && us != '') {
         document.getElementById("err").style.visibility = 'hidden';
         return true;
     } else {
@@ -278,11 +286,11 @@ function req() {
 }
 
 function sentData() {
-    if (validateEmail() && req())
+    if (validateEmail() && req() && validatePassword())
         $.ajax({
             type: "POST",
             url: "form.php",
-            data: "fName=" + document.getElementById('fName').value +"&lName=" + document.getElementById('lName').value + "&email=" + document.getElementById('email').value
+            data: "fName=" + document.getElementById('fName').value + "&lName=" + document.getElementById('lName').value + "&email=" + document.getElementById('email').value
         }).success(function(msg) {
             alert(msg);
         }).fail(function(xmlHttpRequest, statusText, errorThrown) {
@@ -295,4 +303,20 @@ function sentData() {
     else {
         alert("Plese fix the errors on the form");
     }
+}
+
+function login() {
+    $.ajax({
+        type: "POST",
+        url: "form.php",
+        data: "fName=" + document.getElementById('fName').value + "&lName=" + document.getElementById('lName').value + "&email=" + document.getElementById('email').value
+    }).success(function(msg) {
+        alert(msg);
+    }).fail(function(xmlHttpRequest, statusText, errorThrown) {
+        alert(
+                "Your form submission failed.\n\n"
+                + "XML Http Request: " + JSON.stringify(xmlHttpRequest)
+                + ",\nStatus Text: " + statusText
+                + ",\nError Thrown: " + errorThrown);
+    });
 }

@@ -51,12 +51,19 @@ body{
     color: red;
     visibility: hidden;
 }
-#signup{border-radius: 5px;
+.sign{
+    border-radius: 5px;
     position: absolute;
     right: 10px;
     top: 10px;
-    height: 250px;
-    width: 320px;
     display: none;
     background-color: #E5E3DF;
+}
+#signup{
+    height: 300px;
+    width: 320px;
+}
+#login{
+    height: 80px;
+    width: 250px;
 }

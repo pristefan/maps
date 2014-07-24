@@ -10,23 +10,36 @@
 
     </head>
     <body>
-        <button id="hide" onclick="{
-                    $('#signup').show(1000);
-                    $('#hide').hide(1000);
-                }">Show more controls</button>
-        <div id="signup">
+        <button id="sup" onclick="{
+                    $('#login').hide(1000);
+                    $('#signup').toggle(1000);
+                }">Sign up</button>
+        <button id="sip" onclick="{
+                    $('#signup').hide(1000);
+                    $('#login').toggle(1000);
+                }">Log in</button>
+        <div id="signup" class="sign">
             First Name:<input id="fName" onblur="req()" type="text" required><br>
             Last Name:<input id="lName" onblur="req()" type="text" required><br>
+            User Name:<input id="user" onblur="req()" type="text" required><br>
             E-mail:<input id="email" onblur="validateEmail();" type="text" required><br>
-            Password:<input id="pass1" onmouseover="document.getElementById('hint').style.visibility = 'visible'" 
+            Password:<input id="pass" onmouseover="document.getElementById('hint').style.visibility = 'visible'" 
                             onmouseout="document.getElementById('hint').style.visibility = 'hidden'"
-                            onblur="validatePassword();" type="password" required>
-            <br>
+                            onblur="validatePassword();" type="password" required><br>
             <input id="submit" onclick="sentData()" onblur="req()" type="submit" value="Submit"><br>
             <div class="error" id="err">Please complete all the fields</div>
             <span id="emer" class="error">You need to type e valid email address.</span><br>
+            <span id="pass1" class="error">Your password is invalid</span><br>
             <span id='hint' style="visibility: hidden;">Your password must include one of the following
-                characters a-z,A-Z,0-9, and have at least 8 characters. </span>
+                characters a-z,A-Z,0-9, and have between 6 and 20 characters.</span>
+        </div>
+
+        <div id="login" class="sign">
+
+
+            User Name:<input id="user" onblur="" type="text" required><br>
+            Password:<input id="pass" onblur="" type="password" required><br>
+            <input id="submit" onclick="login()" onblur="req()" type="submit" value="Submit"><br>
         </div>
 
     </body>
