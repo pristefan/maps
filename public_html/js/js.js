@@ -146,12 +146,10 @@ function search() {
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
     var searchBox = new google.maps.places.SearchBox(
             /** @type {HTMLInputElement} */(input));
-
     // Listen for the event fired when the user selects an item from the
     // pick list. Retrieve the matching places for that item.
     google.maps.event.addListener(searchBox, 'places_changed', function() {
         var places = searchBox.getPlaces();
-
         if (places.length == 0) {
             return;
         }
@@ -170,7 +168,6 @@ function search() {
                 anchor: new google.maps.Point(17, 34),
                 scaledSize: new google.maps.Size(25, 25)
             };
-
             // Create a marker for each place.
             var marker = new google.maps.Marker({
                 map: map,
@@ -178,15 +175,12 @@ function search() {
                 title: place.name,
                 position: place.geometry.location
             });
-
             markers.push(marker);
-
             bounds.extend(place.geometry.location);
         }
 
         map.fitBounds(bounds);
     });
-
     // Bias the SearchBox results towards places that are within the bounds of the
     // current map's viewport.
     google.maps.event.addListener(map, 'bounds_changed', function() {
@@ -306,17 +300,21 @@ function sentData() {
 }
 
 function login() {
-    $.ajax({
-        type: "POST",
-        url: "form.php",
-        data: "fName=" + document.getElementById('fName').value + "&lName=" + document.getElementById('lName').value + "&email=" + document.getElementById('email').value
-    }).success(function(msg) {
-        alert(msg);
-    }).fail(function(xmlHttpRequest, statusText, errorThrown) {
-        alert(
-                "Your form submission failed.\n\n"
-                + "XML Http Request: " + JSON.stringify(xmlHttpRequest)
-                + ",\nStatus Text: " + statusText
-                + ",\nError Thrown: " + errorThrown);
-    });
+    if ($("#luser").val() != 0 && $("#lpass").val() != 0)
+        $.ajax({
+            type: "POST",
+            url: "form.php",
+            data: "user=" + document.getElementById('luser').value + "&pass=" + document.getElementById('lpass').value
+        }).success(function(msg) {
+            alert(msg);
+        }).fail(function(xmlHttpRequest, statusText, errorThrown) {
+            alert(
+                    "Your form submission failed.\n\n"
+                    + "XML Http Request: " + JSON.stringify(xmlHttpRequest)
+                    + ",\nStatus Text: " + statusText
+                    + ",\nError Thrown: " + errorThrown);
+        });
+    else {
+        alert("Please enter a username and a \npassword before you can continue.");
+    }
 }

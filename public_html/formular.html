@@ -26,7 +26,7 @@
             Password:<input id="pass" onmouseover="document.getElementById('hint').style.visibility = 'visible'" 
                             onmouseout="document.getElementById('hint').style.visibility = 'hidden'"
                             onblur="validatePassword();" type="password" required><br>
-            <input id="submit" onclick="sentData()" onblur="req()" type="submit" value="Submit"><br>
+            <input id="submit" onclick="sentData()"  type="submit" value="Submit"><br>
             <div class="error" id="err">Please complete all the fields</div>
             <span id="emer" class="error">You need to type e valid email address.</span><br>
             <span id="pass1" class="error">Your password is invalid</span><br>
@@ -37,9 +37,9 @@
         <div id="login" class="sign">
 
 
-            User Name:<input id="user" onblur="" type="text" required><br>
-            Password:<input id="pass" onblur="" type="password" required><br>
-            <input id="submit" onclick="login()" onblur="req()" type="submit" value="Submit"><br>
+            User Name:<input id="luser" onblur="" type="text" required><br>
+            Password:<input id="lpass" onblur="" type="password" required><br>
+            <input id="lsubmit" onclick="login()" type="submit" value="Submit"><br>
         </div>
 
     </body>
