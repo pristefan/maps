@@ -67,3 +67,9 @@ body{
     height: 80px;
     width: 250px;
 }
+.but{
+    width: 70px;
+    border: 0px;
+    background-color: #bfb9c5;
+    border-radius: 8px;
+}
