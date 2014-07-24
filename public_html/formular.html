@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Something</title>
+        <title>Login/SignUp</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -26,7 +26,10 @@
             Password:<input id="pass" onmouseover="document.getElementById('hint').style.visibility = 'visible'" 
                             onmouseout="document.getElementById('hint').style.visibility = 'hidden'"
                             onblur="validatePassword();" type="password" required><br>
-            <input id="submit" onclick="sentData()"  type="submit" value="Submit"><br>
+            <input id="submit" onclick="{
+                        sentData();
+                        $('#signup').hide(1000);
+                    }"  type="submit" value="Submit"><br>
             <div class="error" id="err">Please complete all the fields</div>
             <span id="emer" class="error">You need to type e valid email address.</span><br>
             <span id="pass1" class="error">Your password is invalid</span><br>
@@ -39,7 +42,10 @@
 
             User Name:<input id="luser" onblur="" type="text" required><br>
             Password:<input id="lpass" onblur="" type="password" required><br>
-            <input id="lsubmit" onclick="login()" type="submit" value="Submit"><br>
+            <input id="lsubmit" onclick="{
+                        login();
+                        $('#login').hide(1000);
+                    }" type="submit" value="Submit"><br>
         </div>
 
     </body>
