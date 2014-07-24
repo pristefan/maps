@@ -269,6 +269,7 @@ function req() {
     ln = $("#lName").val();
     ps = $("#pass1").val();
     if (fn != '' && ln != '' && ps != '') {
+        document.getElementById("err").style.visibility = 'hidden';
         return true;
     } else {
         document.getElementById("err").style.visibility = 'visible';
@@ -281,7 +282,7 @@ function sentData() {
         $.ajax({
             type: "POST",
             url: "form.php",
-            data: "name=" + document.getElementById('fName').value + "&email=" + document.getElementById('email').value
+            data: "fName=" + document.getElementById('fName').value +"&lName=" + document.getElementById('lName').value + "&email=" + document.getElementById('email').value
         }).success(function(msg) {
             alert(msg);
         }).fail(function(xmlHttpRequest, statusText, errorThrown) {
@@ -292,6 +293,6 @@ function sentData() {
                     + ",\nError Thrown: " + errorThrown);
         });
     else {
-        alert("Plese fix the errors on the form")
+        alert("Plese fix the errors on the form");
     }
 }
