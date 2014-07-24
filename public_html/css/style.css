@@ -47,3 +47,7 @@ body{
     top: 5px;
     width: 304px;
 }
+.error{
+    color: red;
+    visibility: hidden;
+}

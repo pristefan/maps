@@ -28,20 +28,20 @@ function mapType() {
 }
 // Get the route from google
 function route() {
-        var request = {
-            origin: new google.maps.LatLng(start[0]['lat'], start[0]['lng']),
-            destination: new google.maps.LatLng(start[1]['lat'], start[1]['lng']),
-            optimizeWaypoints: false,
-            travelMode: google.maps.TravelMode.DRIVING,
-            unitSystem: google.maps.UnitSystem.METRIC
-        };
-        var directionsService = new google.maps.DirectionsService();
-        directionsService.route(request, function(result, status) {
-            if (status == google.maps.DirectionsStatus.OK) {
-                directionsDisplay.setDirections(result);
-                gjson = result;
-            }
-        });
+    var request = {
+        origin: new google.maps.LatLng(start[0]['lat'], start[0]['lng']),
+        destination: new google.maps.LatLng(start[1]['lat'], start[1]['lng']),
+        optimizeWaypoints: false,
+        travelMode: google.maps.TravelMode.DRIVING,
+        unitSystem: google.maps.UnitSystem.METRIC
+    };
+    var directionsService = new google.maps.DirectionsService();
+    directionsService.route(request, function(result, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(result);
+            gjson = result;
+        }
+    });
 }
 // Request the price
 function price() {
@@ -259,12 +259,29 @@ function validateEmail() {
     }
 }
 
+function validatePassword() {
+
+
+}
+
+function req() {
+    fn = $("#fName").val();
+    ln = $("#lName").val();
+    ps = $("#pass1").val();
+    if (fn != '' && ln != '' && ps != '') {
+        return true;
+    } else {
+        document.getElementById("err").style.visibility = 'visible';
+        return false;
+    }
+}
+
 function sentData() {
-    if (validateEmail())
+    if (validateEmail() && req())
         $.ajax({
             type: "POST",
-            url: "example.php",
-            data: "name=" + document.getElementById('name').value + "&email=" + document.getElementById('email').value
+            url: "form.php",
+            data: "name=" + document.getElementById('fName').value + "&email=" + document.getElementById('email').value
         }).success(function(msg) {
             alert(msg);
         }).fail(function(xmlHttpRequest, statusText, errorThrown) {
@@ -274,4 +291,7 @@ function sentData() {
                     + ",\nStatus Text: " + statusText
                     + ",\nError Thrown: " + errorThrown);
         });
+    else {
+        alert("Plese fix the errors on the form")
+    }
 }

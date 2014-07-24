@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Something</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script src="js/js.js"></script>
+
+    </head>
+    <body>
+        <div id="signup">
+            First Name:<input id="fName"  type="text" required><br>
+            Last Name:<input id="lName" type="text" required><br>
+            E-mail:<input id="email" onblur="validateEmail();" type="text" required>
+            <span id="emer" class="error">You need to type e valid email address.</span><br>
+            Password:<input id="pass1" onblur="validatePassword();" type="password" required>
+            <span id="p1er" class="error">Please enter your password must include one of the following
+                characters a-z,A-Z,0-9, and have at least 8 characters. </span><br>
+            <input id="submit" onclick="sentData()" type="submit" value="Submit"><br>
+            <div class="error" id="err">Please complete all the fields</div>
+        </div>
+
+    </body>
+</html>
