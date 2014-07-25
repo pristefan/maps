@@ -322,3 +322,25 @@ function login() {
         alert("Please enter a username and a \npassword before you can continue.");
     }
 }
+
+function buton(i, j) {
+
+    $('#close').show();
+    $('#log').animate({width: '370px'});
+    $(i).is(':visible') ? $(i).slideToggle(500) : {};
+    $(j).slideToggle(1000);
+}
+
+function inchide() {
+    $('#login').is(':visible') ? $('#login').slideToggle(450) : {};
+    $('#signup').is(':visible') ? $('#signup').slideToggle(450) : {};
+    $('#log').animate({width: '0px'});
+    $('#close').hide();
+}
+
+function enterPressAlert(e, i) {
+    var code = (e.keyCode ? e.keyCode : e.which);
+    if (code == 13) { //Enter keycode
+        i == 1 ? sentData() : login()
+    }
+}

@@ -54,8 +54,8 @@ body{
 }
 .sign{
     border-radius: 5px;
-    position: absolute;
-    right: 10px;
+    position: relative;
+    margin: auto;
     top: 10px;
     display: none;
     background-color: #E5E3DF;
@@ -69,8 +69,29 @@ body{
     width: 250px;
 }
 .but{
-    width: 70px;
+    position: absolute;
+    width: 100px;
     border: 0px;
+    margin: 45px;
     background-color: #bfb9c5;
     border-radius: 8px;
+}
+#log{
+    position: relative;
+    top: 50px;
+    width: 0px;
+    border-radius: 9px;
+    background-color: #999999;
+    height: 400px;
+    margin: auto;
+}
+#log #close{
+    display: none;
+    background-color: #E5E3DF;
+    border: 0px;
+    height: 22px;
+    position: absolute;
+    right: -4px;
+    top: -10px;
+    z-index: 1;
 }
