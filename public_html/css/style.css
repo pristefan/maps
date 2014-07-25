@@ -34,12 +34,13 @@ body{
     width: 320px;
     display: none;
     background-color: #E5E3DF;
+    z-index: 2;
 }
 #maptype{
     position: absolute;
-    right: 350px;
-    top: 10px;
-    z-index: 100;
+    left: 86px;
+    top: 30px;
+    z-index: 1;
 }
 .options {
     position: relative;

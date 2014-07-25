@@ -284,7 +284,11 @@ function sentData() {
         $.ajax({
             type: "POST",
             url: "form.php",
-            data: "fName=" + document.getElementById('fName').value + "&lName=" + document.getElementById('lName').value + "&email=" + document.getElementById('email').value
+            data: "fName=" + document.getElementById('fName').value + "&lName=" +
+                    document.getElementById('lName').value + "&email=" +
+                    document.getElementById('email').value + "&pass=" +
+                    document.getElementById('pass').value + "&user=" +
+                    document.getElementById('user').value
         }).success(function(msg) {
             alert(msg);
         }).fail(function(xmlHttpRequest, statusText, errorThrown) {
