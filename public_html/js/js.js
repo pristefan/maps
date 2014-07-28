@@ -324,7 +324,7 @@ function login() {
 }
 
 function buton(i, j) {
-
+    $('#overlay').show();
     $('#close').show();
     $('#log').animate({width: '370px'});
     $(i).is(':visible') ? $(i).slideToggle(500) : {};
@@ -336,6 +336,7 @@ function inchide() {
     $('#signup').is(':visible') ? $('#signup').slideToggle(450) : {};
     $('#log').animate({width: '0px'});
     $('#close').hide();
+    $('#overlay').hide();
 }
 
 function enterPressAlert(e, i) {

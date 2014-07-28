@@ -30,7 +30,7 @@ body{
     position: absolute;
     right: 10px;
     top: 10px;
-    height: 200px;
+    height: 220px;
     width: 320px;
     display: none;
     background-color: #E5E3DF;
@@ -40,7 +40,6 @@ body{
     position: absolute;
     left: 86px;
     top: 30px;
-    z-index: 1;
 }
 .options {
     position: relative;
@@ -56,7 +55,7 @@ body{
     border-radius: 5px;
     position: relative;
     margin: auto;
-    top: 10px;
+    top: 20px;
     display: none;
     background-color: #E5E3DF;
 }
@@ -77,13 +76,14 @@ body{
     border-radius: 8px;
 }
 #log{
-    position: relative;
+    position: absolute;
     top: 50px;
     width: 0px;
     border-radius: 9px;
     background-color: #999999;
     height: 400px;
-    margin: auto;
+    right: 500px;
+    z-index: 3;
 }
 #log #close{
     display: none;
@@ -94,4 +94,14 @@ body{
     right: -4px;
     top: -10px;
     z-index: 1;
+}
+#overlay{
+    position: absolute;
+    top: 0px;
+    display: none;
+    height: 100%;
+    width: 100%;
+    background-color: gray;
+    z-index: 2;
+    opacity: 0.6;
 }

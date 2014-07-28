@@ -28,7 +28,7 @@ LIMIT 0 , 30";
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_array($result);
 if (!empty($_POST['user']) && $row['pass'] == htmlspecialchars($_POST["pass"])) {
-    echo 'Hello ' . $row['lName'] . ' ' . $row['fName'];
+    echo 'Welcome ' . $row['lName'] . ' ' . $row['fName'];
 } elseif(!empty($_POST['user'])) {
-    echo 'Wrong Password';
+    echo 'Wrong Username or Password';
 }

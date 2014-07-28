@@ -14,22 +14,24 @@
             google.maps.event.addDomListener(window, 'load', initialize);</script>
 
         <input id="search" type="text" placeholder="Search">
+        <div id="map-canvas">
+        </div>
         <select onchange="mapType()" id="maptype">
             <option value="HYBRID">HYBRID</option>
             <option value="ROADMAP">ROADMAP</option>
             <option value="SATELLITE">SATELLITE</option>
             <option value="TERRAIN">TERRAIN</option>
         </select>
-        <div id="map-canvas">
-        </div>
         <button id="hide" onclick="{
-                    $('#right').show(1000);
-                    $('#hide').hide(1000);
+                    $('#right').slideToggle(1000);
+                    $('#hide').slideToggle(1000);
                 }">Show more controls</button>
         <div id="right">
+            <button class="options" id="sup" style="width: 150px" onclick="buton('#login', '#signup')">Sign up</button>
+            <button class="options" id="sin" style="width: 150px;" onclick="buton('#signup', '#login')">Log in</button>
             <button class="options" onclick="{
-                        $('#right').hide(1000);
-                        $('#hide').show(1000);
+                        $('#right').slideToggle(1000);
+                        $('#hide').slideToggle(1000);
                     }">Hide this controls</button><br>
             <input class='options' id="pickup" type="text"
                    placeholder="From"><br>
@@ -45,5 +47,34 @@
             <div class='options' id="info">
             </div>
         </div>
+        <div id="overlay" onclick="inchide()"></div>
+        <div id="log">
+            <button id="close" onclick="inchide()">X</button>
+            <div id="signup" class="sign">
+                First Name:<input id="fName" onkeypress="enterPressAlert(event,1)" onblur="req()" type="text" required><br>
+                Last Name:<input id="lName" onkeypress="enterPressAlert(event,1)" onblur="req()" type="text" required><br>
+                User Name:<input id="user"  onkeypress="enterPressAlert(event,1)" onblur="req()" type="text" required><br>
+                E-mail:<input id="email" onkeypress="enterPressAlert(event,1)" onblur="validateEmail();" type="text" required><br>
+                Password:<input id="pass" onkeypress="enterPressAlert(event,1)" onmouseover="document.getElementById('hint').style.visibility = 'visible'" 
+                                onmouseout="document.getElementById('hint').style.visibility = 'hidden'"
+                                onblur="validatePassword();" type="password" required><br>
+                <input id="submit" onclick="sentData()"  type="submit" value="Submit"><br>
+                <div class="error" id="err">Please complete all the fields</div>
+                <span id="emer" class="error">You need to type e valid email address.</span><br>
+                <span id="pass1" class="error">Your password is invalid</span><br>
+                <span id='hint' style="visibility: hidden;">Your password must include one of the following
+                    characters a-z,A-Z,0-9, and have between 6 and 20 characters.</span>
+            </div>
+
+            <div id="login" class="sign">
+
+
+                User Name:<input id="luser" onkeypress="enterPressAlert(event,2)" onblur="" type="text" required><br>
+                Password:<input id="lpass" onkeypress="enterPressAlert(event,2)" onblur="" type="password" required><br>
+                <input id="lsubmit" onclick="{
+                            login();
+                            inchide();
+                        }" type="submit" value="Submit"><br>
+            </div>
     </body>
 </html>
